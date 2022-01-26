@@ -5,8 +5,14 @@ import styled from 'styled-components';
 
 const Home = ({searchHandler, data, location, setLocation, loading}) => {
     const [change, setChange] = useState(false);
+
     const temp = data.main ? data.main.temp : null;
     const calculate = (temp - 32) / 1.8;
+
+    const minTemp = data.main ? data.main.temp_min.toFixed() : null;
+    const mintem = (minTemp - 32) / 1.8;
+    const maxTemp = data.main ? data.main.temp_max.toFixed() : null;
+    const maxtem = (maxTemp - 32) / 1.8;
 
   return(
       <Container>
@@ -17,8 +23,8 @@ const Home = ({searchHandler, data, location, setLocation, loading}) => {
                     <div>
                         {data.main ?
                             <>
-                                {change ?<h3>{calculate.toFixed()}C°</h3> :
-                                 <h3>{data.main ? data.main.temp.toFixed() : null}F°</h3>}
+                                {change ?<h3>{calculate.toFixed()}°C</h3> :
+                                 <h3>{data.main ? data.main.temp.toFixed() : null}°F</h3>}
                                 <h6>{data.weather ? data.weather[0].main : null}</h6>
                             </>
                             : null
@@ -48,11 +54,13 @@ const Home = ({searchHandler, data, location, setLocation, loading}) => {
                     <Situation>
                         <Temp>
                             <h4>Temp Min</h4>
-                            <h5>{data.main ? data.main.temp_min.toFixed() : null}°</h5>
+                            {change ? <h5>{mintem.toFixed()}°C</h5> :
+                            <h5>{data.main ? data.main.temp_min.toFixed() : null}°F</h5>}
                         </Temp>
                         <Temp>
                             <h4>Temp Max</h4>
-                            <h5>{data.main ? data.main.temp_max.toFixed() : null}°</h5>
+                            {change ? <h5>{maxtem.toFixed()}°C</h5> :
+                            <h5>{data.main ? data.main.temp_max.toFixed() : null}°F</h5>}
                         </Temp>
                         <Temp>
                             <h4>Humidity</h4>
